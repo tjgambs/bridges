@@ -25,6 +25,9 @@ body {
 .input {
 	width: 300px;
 }
-.navbar-link {
+.link-color {
 	color: white;
+}
+.mobile-link-color {
+	color: black;
 }
