@@ -27,34 +27,34 @@
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Address
-              <div class="navbar-dropdown is-boxed">
-                <div class="control">
-                  <input class="input" type="text" placeholder="Home Address">
-                </div>
-              </div>
             </a>
+              <div class="navbar-dropdown is-boxed">
+                  <div class="control navbar-item">
+                    <input class="input" type="text" placeholder="Home Address">
+                  </div>
+              </div>
           </div>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Transportation Mode
-              <div class="navbar-dropdown is-boxed">
-                <div class="control">
-                  <div class="select">
-                    <select>
-                      <option>Car</option>
-                      <option>Public Transportation</option>
-                      <option>Walking</option>
-                    </select>
-                  </div>
+            </a>
+            <div class="navbar-dropdown is-boxed">
+              <div class="control navbar-item">
+                <div class="select">
+                  <select>
+                    <option>Car</option>
+                    <option>Public Transportation</option>
+                    <option>Walking</option>
+                  </select>
                 </div>
               </div>
-            </a>
+            </div>
           </div>
           <div class="navbar-item has-dropdown is-hoverable">
             <a class="navbar-link">
               Max Travel Time
               <div class="navbar-dropdown is-boxed">
-                <div class="control">
+                <div class="control navbar-item">
                   <div class="select">
                     <select>
                       <option>15 Minutes</option>
@@ -71,62 +71,62 @@
             <a class="navbar-link">
               Industry
               <div class="navbar-dropdown is-boxed">
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Retail (Clothing, Grocery, etc)" type="checkbox" onchange="filterMarkers(this)"> Retail (Clothing, Grocery, etc)
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Food Service / Restaurant" type="checkbox" onchange="filterMarkers(this)"> Food Service / Restaurant
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Transportation" type="checkbox" onchange="filterMarkers(this)"> Transportation
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Educational / Child Day Care" type="checkbox" onchange="filterMarkers(this)"> Educational / Child Day Care
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Hotels / Lodging" type="checkbox" onchange="filterMarkers(this)"> Hotels / Lodging
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Office / Business Services" type="checkbox" onSelect="filterMarkers(this)"> Office / Business Services
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Healthcare" type="checkbox" onchange="filterMarkers(this)"> Healthcare
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Arts / Entertainment / Recreation" type="checkbox" onchange="filterMarkers(this)"> Arts / Entertainment / Recreation
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Construction / Manufacturing" type="checkbox" onchange="filterMarkers(this)"> Construction / Manufacturing
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Warehousing" type="checkbox" onchange="filterMarkers(this)"> Warehousing
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Mechanical (Auto, etc)" type="checkbox" onchange="filterMarkers(this)"> Mechanical (Auto, etc)
                   </label>
                 </div>
-                <div class="control">
+                <div class="control navbar-item">
                   <label class="checkbox">
                     <input name="Other" type="checkbox" onchange="filterMarkers(this)"> Other
                   </label>
@@ -136,7 +136,7 @@
           </div>
         </div>
       </nav>
-      <div id="map"></div>
+      <div id="map" class="map"></div>
       <script async defer
          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0PTCM8-kHzIBtZHIzVgVkeO_t_6q5ANE&callback=initMap"></script>
    </body>
