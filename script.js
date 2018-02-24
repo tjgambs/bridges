@@ -11,6 +11,8 @@ function initAutocomplete() {
   function onPlaceChanged() {
       var place = autocomplete.getPlace();
       if (place.geometry) {
+          //Remove old home
+          if (homeMarker != null) homeMarker.setMap(null);
           map.panTo(place.geometry.location);
           map.setZoom(15);
           homeMarker = new google.maps.Marker({
@@ -21,12 +23,12 @@ function initAutocomplete() {
           });
           var infowindow = new google.maps.InfoWindow();
           var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
-          google.maps.event.addListener(homeAddress, 'click', (function(marker) {
+          google.maps.event.addListener(homeMarker, 'click', (function(marker) {
             return function() {
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             }
-            })(homeAddress));
+            })(homeMarker));
       } else {
           document.getElementById('AddressSearch').placeholder = 'Home Address';
       }
