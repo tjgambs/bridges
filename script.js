@@ -70,19 +70,52 @@ function getDistance(p1, p2) {
 function initMarkers() {
     var marker, i;
     var infowindow = new google.maps.InfoWindow();
+    // Group all rows that are at the same address
+    var groupByAddress = {};
     for (i = 0; i < data.length; i++) {
-        // Create the content for the popup window.
-        var contentString = '<div><div>Name: ' + data[i][0] + '</div>' +
-            '<div>Address: ' + data[i][4] + '</div>' +
-            '<div>Industry: ' + data[i][1] + '</div>' +
-            '<div>Position: ' + data[i][2] + '</div>' +
-            '<div>Rate: $' + parseFloat(data[i][3]).toFixed(2) + '</div>' + '</div>';
+        if (groupByAddress[data[i][4]] == undefined) {
+            groupByAddress[data[i][4]] = [data[i]];
+        } else {
+            groupByAddress[data[i][4]].push(data[i]);
+        }
+    }
+    // Iterate through those addresses and group positions
+    var groupByPositionGroupByAddress = {};
+    for (var key in groupByAddress) {
+        var positions = {}
+        for (i = 0; i < groupByAddress[key].length; i++) {   
+            var position = groupByAddress[key][i][2];
+            var pay = groupByAddress[key][i][3];
+            if (positions[position.toLowerCase()] == undefined) {
+                positions[position.toLowerCase()] = [parseInt(pay)];
+            } else {
+                positions[position.toLowerCase()].push(parseInt(pay));
+            }
+        }
+        // Average all of the pays for each position.
+        for (var pos in positions) {
+            positions[pos] = average(positions[pos]);
+        }
+        groupByPositionGroupByAddress[key] = positions
+    }
+
+    for (var address in groupByPositionGroupByAddress) {
+        var contentString = '<div><div>Name: ' + groupByAddress[address][0][0] + '</div>' +
+            '<div>Address: ' + groupByAddress[address][0][4] + '</div>' +
+            '<div>Industry: ' + groupByAddress[address][0][1] + '</div>' + 
+            '<hr /><div>Positions:</div>';
+        for (var position in groupByPositionGroupByAddress[address]) {
+            contentString += '<div>' + toTitleCase(position) + ', $' + parseFloat(groupByPositionGroupByAddress[address][position]).toFixed(2) + '</div>';
+        }
+        contentString += '</div>';
+
         // Create the marker that will be shown on the map.
+
         marker = new google.maps.Marker({
-            position: new google.maps.LatLng(data[i][5], data[i][6]),
+            position: new google.maps.LatLng(groupByAddress[address][0][5], groupByAddress[address][0][6]),
             map: map,
-            title: data[i][0],
-            category: data[i][1],
+            title: groupByAddress[address][0][0],
+            category: groupByAddress[address][0][1],
             contentString: contentString
         });
         marker.setVisible(false);
@@ -104,6 +137,21 @@ function initMarkers() {
             markers[data[i][1]].push(marker);
         }
     }
+}
+
+function average(values) {
+    var total = 0;
+    for(var i = 0; i < values.length; i++) {
+        total += values[i];
+    }
+    return total / values.length;
+}
+
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
 }
 
 
