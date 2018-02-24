@@ -1,21 +1,19 @@
 var markers = [];
 var selectedIndustries = [];
 var map;
-
+var homeMarker;
 
 
 function initAutocomplete() {
   var input = document.getElementById('AddressSearch');
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.addListener('place_changed', onPlaceChanged);
-  var homeAddress = null;
-
   function onPlaceChanged() {
       var place = autocomplete.getPlace();
       if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(15);
-          homeAddress = new google.maps.Marker({
+          homeMarker = new google.maps.Marker({
               position: place.geometry.location,
               animation: google.maps.Animation.DROP,
               icon: markerIcon
