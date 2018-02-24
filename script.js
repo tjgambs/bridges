@@ -67,9 +67,7 @@ function initMap() {
 
 
 function filterMarkers(category) {
-
     var indexOfCategory = selectedIndustries.indexOf(category);
-    console.log(indexOfCategory)
     if (indexOfCategory > -1) {
       selectedIndustries.splice(indexOfCategory, 1)
       for (var i = 0; i < markers.length; i++) {
