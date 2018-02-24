@@ -30,7 +30,7 @@ function initAutocomplete() {
             }
             })(homeMarker));
       } else {
-          document.getElementById('AddressSearch').placeholder = 'Home Address';
+          document.getElementById('AddressSearch').placeholder = 'Starting Address';
       }
   }
 }
