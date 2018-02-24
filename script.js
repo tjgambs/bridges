@@ -1,4 +1,4 @@
-var markers = [];
+var markers = {};
 var selectedIndustries = [];
 var map;
 var homeMarker;
@@ -21,12 +21,12 @@ function initAutocomplete() {
           });
           var infowindow = new google.maps.InfoWindow();
           var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
-          google.maps.event.addListener(homeAddress, 'click', (function(marker) {
+          google.maps.event.addListener(homeMarker, 'click', (function(marker) {
             return function() {
                 infowindow.setContent(contentString);
                 infowindow.open(map, marker);
             }
-            })(homeAddress));
+            })(homeMarker));
       } else {
           document.getElementById('AddressSearch').placeholder = 'Home Address';
       }
@@ -57,13 +57,16 @@ function initMarkers() {
                 infowindow.open(map, marker);
             }
         })(marker));
-        markers.push(marker)
+        if (markers[data[i][1]] == undefined) {
+          markers[data[i][1]] = [marker]
+        } else {
+          markers[data[i][1]].push(marker)
+        }
     }
 }
 
 
 function initMap() {
-    // Initialize the map, centered on Chicago, IL
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
         center: new google.maps.LatLng(41.7377, -87.6976)
@@ -77,44 +80,29 @@ function filterMarkers(category) {
     var indexOfCategory = selectedIndustries.indexOf(category);
     if (indexOfCategory > -1) {
       selectedIndustries.splice(indexOfCategory, 1)
-      for (var i = 0; i < markers.length; i++) {
-        if (markers[i].category == category.name) {
-            markers[i].setVisible(false);
-        }
+      for (var i = 0; i < markers[category.name].length; i++) {
+          markers[category.name][i].setVisible(false);
       }
     } else {
       selectedIndustries.push(category)
-      for (var i = 0; i < markers.length; i++) {
-          if (markers[i].category == category.name) {
-              markers[i].setVisible(true);
-          }
+      for (var i = 0; i < markers[category.name].length; i++) {
+          markers[category.name][i].setVisible(true);
       }
     }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
-    // Get all "navbar-burger" elements
     var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    // Check if there are any navbar burgers
     if ($navbarBurgers.length > 0) {
-
-        // Add a click event on each of them
         $navbarBurgers.forEach(function($el) {
             $el.addEventListener('click', function() {
-
-                // Get the target from the "data-target" attribute
                 var target = $el.dataset.target;
                 var $target = document.getElementById(target);
                 var map = document.getElementById('map')
-
-                // Toggle the class on both the "navbar-burger" and the "navbar-menu"
                 $el.classList.toggle('is-active');
                 $target.classList.toggle('is-active');
                 map.classList.toggle('map')
                 map.classList.toggle('nomap')
-
             });
         });
     }
