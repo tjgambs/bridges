@@ -254,4 +254,16 @@ document.addEventListener('DOMContentLoaded', function() {
     logoNav.addEventListener('mouseenter', function() {
         addressNav.classList.remove('is-active')
     });
+    $('#checkAll').click(function(event) {
+        if(this.checked) {
+            $(':checkbox').each(function() {
+                if (!this.checked) this.click();
+            });
+        }
+        else {
+            $(':checkbox').each(function() {
+                if (this.checked) this.click();
+            });
+        }
+    });
 });
