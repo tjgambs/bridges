@@ -6,7 +6,9 @@
     <title>Bridges Job Search</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="data.js"></script>
     <script type="text/javascript" src="script.js"></script>
    </head>
    <body>
@@ -71,62 +73,62 @@
               <div class="navbar-dropdown is-boxed">
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Retail (Clothing, Grocery, etc)
+                    <input name="Retail (Clothing, Grocery, etc)" type="checkbox" onchange="filterMarkers(this)"> Retail (Clothing, Grocery, etc)
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Food Service / Restaurant
+                    <input name="Food Service / Restaurant" type="checkbox" onchange="filterMarkers(this)"> Food Service / Restaurant
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Transportation
+                    <input name="Transportation" type="checkbox" onchange="filterMarkers(this)"> Transportation
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Educational / Child Day Care
+                    <input name="Educational / Child Day Care" type="checkbox" onchange="filterMarkers(this)"> Educational / Child Day Care
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Hotels / Lodging
+                    <input name="Hotels / Lodging" type="checkbox" onchange="filterMarkers(this)"> Hotels / Lodging
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Office / Business Services
+                    <input name="Office / Business Services" type="checkbox" onSelect="filterMarkers(this)"> Office / Business Services
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Healthcare
+                    <input name="Healthcare" type="checkbox" onchange="filterMarkers(this)"> Healthcare
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Arts / Entertainment / Recreation
+                    <input name="Arts / Entertainment / Recreation" type="checkbox" onchange="filterMarkers(this)"> Arts / Entertainment / Recreation
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Construction / Manufacturing
+                    <input name="Construction / Manufacturing" type="checkbox" onchange="filterMarkers(this)"> Construction / Manufacturing
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Warehousing
+                    <input name="Warehousing" type="checkbox" onchange="filterMarkers(this)"> Warehousing
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Mechanical (Auto, etc)
+                    <input name="Mechanical (Auto, etc)" type="checkbox" onchange="filterMarkers(this)"> Mechanical (Auto, etc)
                   </label>
                 </div>
                 <div class="control navbar-item">
                   <label class="checkbox">
-                    <input type="checkbox"> Other
+                    <input name="Other" type="checkbox" onchange="filterMarkers(this)"> Other
                   </label>
                 </div>
               </div>

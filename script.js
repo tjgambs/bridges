@@ -1,15 +1,11 @@
+
+var markers = [];
+var map;
+
 function initMap() {
-    var uluru = {
-        lat: -25.363,
-        lng: 131.044
-    };
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: uluru
-    });
-    var marker = new google.maps.Marker({
-        position: uluru,
-        map: map
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: new google.maps.LatLng(41.7377, -87.6976)
     });
 
     var input = document.getElementById('AddressSearch');
@@ -31,6 +27,44 @@ function initMap() {
           document.getElementById('AddressSearch').placeholder = 'Home Address';
         }
     }
+
+
+    var marker, i, infowindow;
+    for (i = 0; i < data.length; i++) {
+      var contentString = '<div><div>Name: '+ data[i][0] + '</div>' + 
+          '<div>Address: '+ data[i][4] + '</div>' + 
+          '<div>Industry: '+ data[i][1] + '</div>' + 
+          '<div>Position: '+ data[i][2] + '</div>' +
+          '<div>Rate: $'+ data[i][3] + '</div>'+'</div>';
+      infowindow = new google.maps.InfoWindow({
+        content: contentString
+      });
+      marker = new google.maps.Marker({
+          position: new google.maps.LatLng(data[i][5], data[i][6]),
+          map: map,
+          title: data[i][0],
+          category: data[i][1]
+      });
+      marker.setVisible(false)
+      google.maps.event.addListener(marker, 'click', (function(marker) {
+        return function() {
+          infowindow.open(map, marker);
+        }
+      })(marker));
+      markers.push(marker)
+    }
+}
+
+
+function filterMarkers(category) {
+    var i;
+    for (i = 0; i < markers.length; i++) {
+        if (markers[i].category == category.name) {
+            markers[i].setVisible(true);
+        } else {          
+            markers[i].setVisible(false);
+        }
+    }  
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -60,4 +94,3 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
-
