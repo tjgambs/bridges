@@ -5,42 +5,42 @@ var homeMarker;
 var currentRadius = 1;
 
 function initAutocomplete() {
-  var input = document.getElementById('AddressSearch');
-  var autocomplete = new google.maps.places.Autocomplete(input);
-  autocomplete.addListener('place_changed', onPlaceChanged);
-  function onPlaceChanged() {
-      var place = autocomplete.getPlace();
-      if (place.geometry) {
-          //Remove old home
-          if (homeMarker != null) homeMarker.setMap(null);
-          map.panTo(place.geometry.location);
-          map.setZoom(15);
-          homeMarker = new google.maps.Marker({
-              position: place.geometry.location,
-              animation: google.maps.Animation.DROP,
-              map: map,
-              icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-          });
-          var infowindow = new google.maps.InfoWindow();
-          var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
-          google.maps.event.addListener(homeMarker, 'click', (function(marker) {
-            return function() {
-                infowindow.setContent(contentString);
-                infowindow.open(map, marker);
-            }
+    var input = document.getElementById('AddressSearch');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', onPlaceChanged);
+    function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+        if (place.geometry) {
+            //Remove old home
+            if (homeMarker != null) homeMarker.setMap(null);
+            map.panTo(place.geometry.location);
+            map.setZoom(15);
+            homeMarker = new google.maps.Marker({
+            position: place.geometry.location,
+            animation: google.maps.Animation.DROP,
+            map: map,
+            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+            });
+            var infowindow = new google.maps.InfoWindow();
+            var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
+            google.maps.event.addListener(homeMarker, 'click', (function(marker) {
+                return function() {
+                    infowindow.setContent(contentString);
+                    infowindow.open(map, marker);
+                }
             })(homeMarker));
-      } else {
-          document.getElementById('AddressSearch').placeholder = 'Starting Address';
-      }
-      for (var key in markers) {
-        if (markers.hasOwnProperty(key)) {           
-            for(var i = 0; i < markers[key].length; i++) {
-              var point = markers[key][i].position;
-              markers[key][i].distance = getDistance(point, homeMarker.position);
+        } else {
+            document.getElementById('AddressSearch').placeholder = 'Starting Address';
+        }
+        for (var key in markers) {
+            if (markers.hasOwnProperty(key)) {           
+                for(var i = 0; i < markers[key].length; i++) {
+                    var point = markers[key][i].position;
+                    markers[key][i].distance = getDistance(point, homeMarker.position);
+                }
             }
         }
-      }
-  }
+    }
 }
 
 function getDistance(p1, p2) {
