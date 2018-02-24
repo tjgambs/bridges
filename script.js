@@ -111,9 +111,9 @@ function initMap() {
 }
 
 
-function filterMarkers(category) {
+function filterMarkers(category) { // WORKS
     // Check to see if this industry is already selected.
-    var indexOfCategory = selectedIndustries.indexOf(category);
+    var indexOfCategory = selectedIndustries.indexOf(category.name);
     if (indexOfCategory > -1) {
         // If this industry is currently selected, then this function
         // call is meant to remove all markers in this industry.
@@ -134,7 +134,7 @@ function filterMarkers(category) {
                 markers[category.name][i].setVisible(true);
             }
         }
-        selectedIndustries.push(category)
+        selectedIndustries.push(category.name)
     }
 }
 
@@ -144,14 +144,13 @@ function updateRadius(radius) {
     currentRadius = parseInt(x);
     // Iterate through all of the selected categories and adjust according 
     // to the new radius.
-    for (var key in selectedIndustries) {
-        if (markers.hasOwnProperty(key)) {           
-            for (var i = 0; i < markers[key].length; i++) {
-                if (markers[key][i].distance > currentRadius) {
-                    markers[key][i].setVisible(false);
-                } else {
-                    markers[key][i].setVisible(true);
-                }
+
+    for (var i = 0; i < selectedIndustries.length; i++) {
+        for (var j = 0; j < markers[selectedIndustries[i]].length; j++) {
+            if (markers[selectedIndustries[i]][j].distance > currentRadius) {
+                markers[selectedIndustries[i]][j].setVisible(false);
+            } else {
+                markers[selectedIndustries[i]][j].setVisible(true)
             }
         }
     }
