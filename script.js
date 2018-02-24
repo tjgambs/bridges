@@ -100,11 +100,16 @@ document.addEventListener('DOMContentLoaded', function() {
             $el.addEventListener('click', function() {
                 var target = $el.dataset.target;
                 var $target = document.getElementById(target);
-                var map = document.getElementById('map')
                 $el.classList.toggle('is-active');
                 $target.classList.toggle('is-active');
+                var map = document.getElementById('map')
                 map.classList.toggle('map')
                 map.classList.toggle('nomap')
+                var navLinks = document.querySelectorAll('.navbar-link')
+                navLinks.forEach(function($ele) {
+                    $ele.classList.toggle('link-color')
+                    $ele.classList.toggle('mobile-link-color')
+                });
             });
         });
     }
