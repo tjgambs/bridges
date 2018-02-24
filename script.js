@@ -11,6 +11,26 @@ function initMap() {
         position: uluru,
         map: map
     });
+
+    var input = document.getElementById('AddressSearch');
+    autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.addListener('place_changed', onPlaceChanged);
+    homeAddress = null
+
+    function onPlaceChanged() {
+        var place = autocomplete.getPlace();
+        if (place.geometry) {
+          map.panTo(place.geometry.location);
+          map.setZoom(15);
+          homeAddress = new google.maps.Marker({
+                position: place.geometry.location,
+                animation: google.maps.Animation.DROP,
+                icon: markerIcon
+            });
+        } else {
+          document.getElementById('AddressSearch').placeholder = 'Home Address';
+        }
+    }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
