@@ -100,12 +100,12 @@ function initMarkers() {
     }
 
     for (var address in groupByPositionGroupByAddress) {
-        var contentString = '<div><div>Name: ' + groupByAddress[address][0][0] + '</div>' +
-            '<div>Address: ' + groupByAddress[address][0][4] + '</div>' +
-            '<div>Industry: ' + groupByAddress[address][0][1] + '</div>' + 
-            '<hr /><div>Positions:</div>';
+        var contentString = '<div><div><b>Name</b>:<div>' + groupByAddress[address][0][0] + '</div></div>' +
+            '<div><b>Address</b>:<div>' + groupByAddress[address][0][4] + '</div></div>' +
+            '<div><b>Industry</b>:<div>' + groupByAddress[address][0][1] + '</div></div>' + 
+            '<div><b>Positions</b>:</div>';
         for (var position in groupByPositionGroupByAddress[address]) {
-            contentString += '<div>' + toTitleCase(position) + ', $' + parseFloat(groupByPositionGroupByAddress[address][position]).toFixed(2) + '</div>';
+            contentString += '<div>' + toTitleCase(position) + ': $' + parseFloat(groupByPositionGroupByAddress[address][position]).toFixed(2) + '</div>';
         }
         contentString += '</div>';
 
