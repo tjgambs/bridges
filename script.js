@@ -110,7 +110,6 @@ function initMarkers() {
         contentString += '</div>';
 
         // Create the marker that will be shown on the map.
-
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(groupByAddress[address][0][5], groupByAddress[address][0][6]),
             map: map,
@@ -131,17 +130,17 @@ function initMarkers() {
             }
         })(marker));
         // Create a look up table for the markers based on industry.
-        if (markers[data[i][1]] == undefined) {
-            markers[data[i][1]] = [marker];
+        if (markers[groupByAddress[address][0][1]] == undefined) {
+            markers[groupByAddress[address][0][1]] = [marker];
         } else {
-            markers[data[i][1]].push(marker);
+            markers[groupByAddress[address][0][1]].push(marker);
         }
     }
 }
 
 function average(values) {
     var total = 0;
-    for(var i = 0; i < values.length; i++) {
+    for (var i = 0; i < values.length; i++) {
         total += values[i];
     }
     return total / values.length;
