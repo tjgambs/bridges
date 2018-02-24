@@ -9,6 +9,13 @@ function initAutocomplete() {
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', onPlaceChanged);
     function onPlaceChanged() {
+        //Show other filters
+        var transportNav = document.getElementById('transport');
+        var distanceNav = document.getElementById('distance');
+        var industryNav = document.getElementById('industry');
+        transportNav.style.visibility = 'visible';
+        distanceNav.style.visibility = 'visible';
+        industryNav.style.visibility = 'visible';
         var place = autocomplete.getPlace();
         if (place.geometry) {
             //Remove old home
@@ -78,7 +85,7 @@ function initMarkers() {
             category: data[i][1],
             contentString: contentString
         });
-        marker.setVisible(false)
+        marker.setVisible(false);
         // Attach an event listener to each of the pins so when they are 
         // clicked, we can get directions and display the info window.
         google.maps.event.addListener(marker, 'click', (function(marker) {
@@ -86,15 +93,15 @@ function initMarkers() {
                 infowindow.setContent(marker.contentString);
                 infowindow.open(map, marker);
 
-                console.log('Go get directions!')
+                console.log('Go get directions!');
 
             }
         })(marker));
         // Create a look up table for the markers based on industry.
         if (markers[data[i][1]] == undefined) {
-            markers[data[i][1]] = [marker]
+            markers[data[i][1]] = [marker];
         } else {
-            markers[data[i][1]].push(marker)
+            markers[data[i][1]].push(marker);
         }
     }
 }
@@ -134,7 +141,7 @@ function filterMarkers(category) { // WORKS
                 markers[category.name][i].setVisible(true);
             }
         }
-        selectedIndustries.push(category.name)
+        selectedIndustries.push(category.name);
     }
 }
 
@@ -150,7 +157,7 @@ function updateRadius(radius) {
             if (markers[selectedIndustries[i]][j].distance > currentRadius) {
                 markers[selectedIndustries[i]][j].setVisible(false);
             } else {
-                markers[selectedIndustries[i]][j].setVisible(true)
+                markers[selectedIndustries[i]][j].setVisible(true);
             }
         }
     }
@@ -166,21 +173,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 var $target = document.getElementById(target);
                 $el.classList.toggle('is-active');
                 $target.classList.toggle('is-active');
-                map.classList.toggle('map')
-                map.classList.toggle('nomap')
+                map.classList.toggle('map');
+                map.classList.toggle('nomap');
                 var navLinks = document.querySelectorAll('.navbar-link')
                 navLinks.forEach(function($ele) {
-                    $ele.classList.toggle('link-color')
-                    $ele.classList.toggle('mobile-link-color')
+                    $ele.classList.toggle('link-color');
+                    $ele.classList.toggle('mobile-link-color');
                 });
             });
         });
     }
-    var addressNav = document.getElementById('address')
-    var transportNav = document.getElementById('transport')
-    var distanceNav = document.getElementById('distance')
-    var industryNav = document.getElementById('industry')
-    var logoNav = document.getElementById('logo')
+    var addressNav = document.getElementById('address');
+    var transportNav = document.getElementById('transport');
+    var distanceNav = document.getElementById('distance');
+    var industryNav = document.getElementById('industry');
+    var logoNav = document.getElementById('logo');
     addressNav.addEventListener('mouseenter', function() {
         addressNav.classList.add('is-active')
     });
