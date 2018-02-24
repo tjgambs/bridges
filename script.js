@@ -158,6 +158,7 @@ function updateRadius(radius) {
 
 document.addEventListener('DOMContentLoaded', function() {
     var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    var map = document.getElementById('map')
     if ($navbarBurgers.length > 0) {
         $navbarBurgers.forEach(function($el) {
             $el.addEventListener('click', function() {
@@ -165,7 +166,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 var $target = document.getElementById(target);
                 $el.classList.toggle('is-active');
                 $target.classList.toggle('is-active');
-                var map = document.getElementById('map')
                 map.classList.toggle('map')
                 map.classList.toggle('nomap')
                 var navLinks = document.querySelectorAll('.navbar-link')
@@ -176,4 +176,27 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
+    var addressNav = document.getElementById('address')
+    var transportNav = document.getElementById('transport')
+    var distanceNav = document.getElementById('distance')
+    var industryNav = document.getElementById('industry')
+    var logoNav = document.getElementById('logo')
+    addressNav.addEventListener('mouseenter', function() {
+        addressNav.classList.add('is-active')
+    });
+    map.addEventListener('mouseenter', function() {
+        addressNav.classList.remove('is-active')
+    });
+    transportNav.addEventListener('mouseenter', function() {
+        addressNav.classList.remove('is-active')
+    });
+    distanceNav.addEventListener('mouseenter', function() {
+        addressNav.classList.remove('is-active')
+    });
+    industryNav.addEventListener('mouseenter', function() {
+        addressNav.classList.remove('is-active')
+    });
+    logoNav.addEventListener('mouseenter', function() {
+        addressNav.classList.remove('is-active')
+    });
 });
