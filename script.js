@@ -16,11 +16,11 @@ function initAutocomplete() {
             map.panTo(place.geometry.location);
             map.setZoom(15);
             homeMarker = new google.maps.Marker({
-            position: place.geometry.location,
-            animation: google.maps.Animation.DROP,
-            map: map,
-            icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-            });
+                            position: place.geometry.location,
+                            animation: google.maps.Animation.DROP,
+                            map: map,
+                            icon: 'assets/home_pin.png'
+                        });
             var infowindow = new google.maps.InfoWindow();
             var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
             google.maps.event.addListener(homeMarker, 'click', (function(marker) {
