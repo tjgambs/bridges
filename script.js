@@ -11,6 +11,8 @@ function initAutocomplete() {
   function onPlaceChanged() {
       var place = autocomplete.getPlace();
       if (place.geometry) {
+          //Remove old home
+          if (homeMarker != null) homeMarker.setMap(null);
           map.panTo(place.geometry.location);
           map.setZoom(15);
           homeMarker = new google.maps.Marker({
@@ -28,7 +30,7 @@ function initAutocomplete() {
             }
             })(homeMarker));
       } else {
-          document.getElementById('AddressSearch').placeholder = 'Home Address';
+          document.getElementById('AddressSearch').placeholder = 'Starting Address';
       }
   }
 }
