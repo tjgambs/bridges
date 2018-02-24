@@ -14,11 +14,20 @@ function initAutocomplete() {
       if (place.geometry) {
           map.panTo(place.geometry.location);
           map.setZoom(15);
-          homeAddress = new google.maps.Marker({
+          var homeAddress = new google.maps.Marker({
               position: place.geometry.location,
               animation: google.maps.Animation.DROP,
-              icon: markerIcon
+              map: map,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
           });
+          var infowindow = new google.maps.InfoWindow();
+          var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
+          google.maps.event.addListener(homeAddress, 'click', (function(marker) {
+            return function() {
+                infowindow.setContent(contentString);
+                infowindow.open(map, marker);
+            }
+            })(homeAddress));
       } else {
           document.getElementById('AddressSearch').placeholder = 'Home Address';
       }
