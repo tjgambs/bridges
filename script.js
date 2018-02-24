@@ -1,4 +1,5 @@
 var markers = [];
+var selectedIndustries = [];
 var map;
 
 
@@ -36,10 +37,8 @@ function initAutocomplete() {
 
 
 function initMarkers() {
-  var marker, i;
+    var marker, i;
     var infowindow = new google.maps.InfoWindow();
-
-
     for (i = 0; i < data.length; i++) {
         var contentString = '<div><div>Name: ' + data[i][0] + '</div>' +
             '<div>Address: ' + data[i][4] + '</div>' +
@@ -64,8 +63,8 @@ function initMarkers() {
     }
 }
 
-function initMap() {
 
+function initMap() {
     // Initialize the map, centered on Chicago, IL
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -77,13 +76,21 @@ function initMap() {
 
 
 function filterMarkers(category) {
-    var i;
-    for (i = 0; i < markers.length; i++) {
+    var indexOfCategory = selectedIndustries.indexOf(category);
+    if (indexOfCategory > -1) {
+      selectedIndustries.splice(indexOfCategory, 1)
+      for (var i = 0; i < markers.length; i++) {
         if (markers[i].category == category.name) {
-            markers[i].setVisible(true);
-        } else {
             markers[i].setVisible(false);
         }
+      }
+    } else {
+      selectedIndustries.push(category)
+      for (var i = 0; i < markers.length; i++) {
+          if (markers[i].category == category.name) {
+              markers[i].setVisible(true);
+          }
+      }
     }
 }
 
