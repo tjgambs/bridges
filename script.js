@@ -3,6 +3,7 @@ var selectedIndustries = [];
 var map;
 var homeMarker;
 var currentRadius = 1;
+var burgerOpen = false;
 
 function initAutocomplete() {
     var input = document.getElementById('AddressSearch');
@@ -247,14 +248,17 @@ function updateRadius(radius) {
 }
 
 function toggleDone() {
-    var doneButton = document.getElementById('doneButton');
-    doneButton.style.visibility = doneButton.style.visibility == "hidden" ? "visible" : "hidden";
+    if (burgerOpen) {
+        var doneButton = document.getElementById('doneButton');
+        doneButton.style.visibility = doneButton.style.visibility == "hidden" ? "visible" : "hidden";
+    }
 }
 
 function burgerClicked($el) {
     var map = document.getElementById('map')
     var distanceNav = document.getElementById('distance')
     $el.addEventListener('click', function() {
+        burgerOpen = burgerOpen == true ? false : true;
         var target = $el.dataset.target;
         var $target = document.getElementById(target);
         $el.classList.toggle('is-active');
@@ -272,6 +276,7 @@ function burgerClicked($el) {
 }
 
 function doneAction($el) {
+    burgerOpen = burgerOpen == true ? false : true;
     var map = document.getElementById('map');
     var distanceNav = document.getElementById('distance');
     var target = $el.dataset.target;
