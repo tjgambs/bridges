@@ -102,12 +102,11 @@ function initMarkers() {
         var contentString = '<div><div><b>Name</b>:<div>' + groupByAddress[address][0][0] + '</div></div>' +
             '<div><b>Address</b>:<div>' + groupByAddress[address][0][4] + '</div></div>' +
             '<div><b>Industry</b>:<div>' + groupByAddress[address][0][1] + '</div></div>' + 
-            '<div><b>Positions</b>:</div>';
+            '<div><b>Previous Positions</b>:</div>';
         for (var position in groupByPositionGroupByAddress[address]) {
             contentString += '<div>' + toTitleCase(position) + ': $' + parseFloat(groupByPositionGroupByAddress[address][position]).toFixed(2) + '</div>';
         }
-        contentString += '<a href="#" onclick=\'getDirections(\"'+groupByAddress[address][0][4]+'\");\'>Get Directions</a>';
-        contentString += '</div>';
+        contentString += '<a href="#" onclick=\'getDirections(\"'+groupByAddress[address][0][4]+'\");\'><b>Get Directions</b></a>';
 
         // Create the marker that will be shown on the map.
         marker = new google.maps.Marker({
