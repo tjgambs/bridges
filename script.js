@@ -37,17 +37,22 @@ function initAutocomplete() {
                     infowindow.open(map, marker);
                 }
             })(homeMarker));
-        } else {
-            document.getElementById('AddressSearch').placeholder = 'Starting Address';
-        }
-        for (var key in markers) {
-            if (markers.hasOwnProperty(key)) {
-                for (var i = 0; i < markers[key].length; i++) {
-                    var point = markers[key][i].position;
-                    var distance = getDistance(point, homeMarker.position);
-                    markers[key][i].distance = distance;
+            for (var key in markers) {
+                if (markers.hasOwnProperty(key)) {
+                    for (var i = 0; i < markers[key].length; i++) {
+                        var point = markers[key][i].position;
+                        var distance = getDistance(point, homeMarker.position);
+                        markers[key][i].distance = distance;
+                    }
                 }
             }
+            if (selectedIndustries.length > 0) {
+                for(var i = 0; i < selectedIndustries.length; i++) {
+                    filterMarkers(selectedIndustries[i]);
+                }
+            }
+        } else {
+            document.getElementById('AddressSearch').placeholder = 'Starting Address';
         }
     }
 }
@@ -181,6 +186,21 @@ function initMap() {
 
 
 function filterMarkers(category) { // WORKS
+
+    if (category.name == undefined) {
+        // Then just update 
+        for (var i = 0; i < markers[category].length; i++) {
+            if (markers[category][i].distance > currentRadius) {
+                // If this location is greater than the selected radius
+                markers[category][i].setVisible(false);
+            } else {
+                // If this location is within the radius.
+                markers[category][i].setVisible(true);
+            }
+        }
+        return;
+    }
+
     // Check to see if this industry is already selected.
     var indexOfCategory = selectedIndustries.indexOf(category.name);
     if (indexOfCategory > -1) {
