@@ -10,10 +10,8 @@ function initAutocomplete() {
     autocomplete.addListener('place_changed', onPlaceChanged);
     function onPlaceChanged() {
         //Show other filters
-        var transportNav = document.getElementById('transport');
         var distanceNav = document.getElementById('distance');
         var industryNav = document.getElementById('industry');
-        transportNav.style.visibility = 'visible';
         distanceNav.style.visibility = 'visible';
         industryNav.style.visibility = 'visible';
         var place = autocomplete.getPlace();
@@ -234,7 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     var addressNav = document.getElementById('address');
-    var transportNav = document.getElementById('transport');
     var distanceNav = document.getElementById('distance');
     var industryNav = document.getElementById('industry');
     var logoNav = document.getElementById('logo');
@@ -242,9 +239,6 @@ document.addEventListener('DOMContentLoaded', function() {
         addressNav.classList.add('is-active')
     });
     map.addEventListener('mouseenter', function() {
-        addressNav.classList.remove('is-active')
-    });
-    transportNav.addEventListener('mouseenter', function() {
         addressNav.classList.remove('is-active')
     });
     distanceNav.addEventListener('mouseenter', function() {
