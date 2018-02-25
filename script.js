@@ -8,6 +8,7 @@ function initAutocomplete() {
     var input = document.getElementById('AddressSearch');
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.addListener('place_changed', onPlaceChanged);
+
     function onPlaceChanged() {
         //Show other filters
         var distanceNav = document.getElementById('distance');
@@ -28,7 +29,8 @@ function initAutocomplete() {
                 address: place.formatted_address
             });
             var infowindow = new google.maps.InfoWindow();
-            var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
+            var contentString = '<div><div>Home</div><div>' + 
+                place.formatted_address + '</div></div>';
             google.maps.event.addListener(homeMarker, 'click', (function(marker) {
                 return function() {
                     infowindow.setContent(contentString);
@@ -39,10 +41,11 @@ function initAutocomplete() {
             document.getElementById('AddressSearch').placeholder = 'Starting Address';
         }
         for (var key in markers) {
-            if (markers.hasOwnProperty(key)) {           
-                for(var i = 0; i < markers[key].length; i++) {
+            if (markers.hasOwnProperty(key)) {
+                for (var i = 0; i < markers[key].length; i++) {
                     var point = markers[key][i].position;
-                    markers[key][i].distance = getDistance(point, homeMarker.position);
+                    var distance = getDistance(point, homeMarker.position);
+                    markers[key][i].distance = distance;
                 }
             }
         }
@@ -50,16 +53,16 @@ function initAutocomplete() {
 }
 
 function getDistance(p1, p2) {
-    function rad(x) {
-      return x * Math.PI / 180;
-    }
     // Haversine distance formula
+    function rad(x) {
+        return x * Math.PI / 180;
+    }
     var R = 6378137; // Earth’s mean radius in meter
     var dLat = rad(p2.lat() - p1.lat());
     var dLong = rad(p2.lng() - p1.lng());
     var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
-    Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        Math.cos(rad(p1.lat())) * Math.cos(rad(p2.lat())) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     var d = R * c;
     return d * 0.000621371; // returns the distance in miles
@@ -99,18 +102,26 @@ function initMarkers() {
     }
 
     for (var address in groupByPositionGroupByAddress) {
-        var contentString = '<div><div><b>Name</b>:<div>' + groupByAddress[address][0][0] + '</div></div>' +
-            '<div><b>Address</b>:<div>' + groupByAddress[address][0][4] + '</div></div>' +
-            '<div><b>Industry</b>:<div>' + groupByAddress[address][0][1] + '</div></div>' + 
-            '<div><b>Previous Positions</b>:</div>';
+        var contentString = ('<div><div><b>Name</b>:<div>' + 
+            groupByAddress[address][0][0] + '</div></div>' +
+            '<div><b>Address</b>:<div>' + 
+            groupByAddress[address][0][4] + '</div></div>' +
+            '<div><b>Industry</b>:<div>' + 
+            groupByAddress[address][0][1] + '</div></div>' +
+            '<div><b>Previous Positions</b>:</div>');
         for (var position in groupByPositionGroupByAddress[address]) {
-            contentString += '<div>' + toTitleCase(position) + ': $' + parseFloat(groupByPositionGroupByAddress[address][position]).toFixed(2) + '</div>';
+            var pay = groupByPositionGroupByAddress[address][position];
+            contentString += '<div>' + toTitleCase(position) + ': $' + 
+                parseFloat(pay).toFixed(2) + '</div>';
         }
-        contentString += '<a href="#" onclick=\'getDirections(\"'+groupByAddress[address][0][4]+'\");\'><b>Get Directions</b></a>';
+        contentString += '<a href="#" onclick=\'getDirections(\"' + 
+            groupByAddress[address][0][4] + '\");\'><b>Get Directions</b></a>';
 
         // Create the marker that will be shown on the map.
         marker = new google.maps.Marker({
-            position: new google.maps.LatLng(groupByAddress[address][0][5], groupByAddress[address][0][6]),
+            position: new google.maps.LatLng(
+                groupByAddress[address][0][5], 
+                groupByAddress[address][0][6]),
             map: map,
             title: groupByAddress[address][0][0],
             category: groupByAddress[address][0][1],
@@ -135,11 +146,14 @@ function initMarkers() {
 }
 
 function getDirections(destination_address) {
-    url = 'https://www.google.com/maps/dir/?api=1&origin='+ homeMarker.address + '&destination=' + destination_address;
+    // Generate a url that the user can use to get directions from google.
+    url = ('https://www.google.com/maps/dir/?api=1&origin=' + 
+            homeMarker.address + '&destination=' + destination_address);
     window.open(url)
 }
 
 function average(values) {
+    // Look at the values and compute an average.
     var total = 0;
     for (var i = 0; i < values.length; i++) {
         total += values[i];
@@ -148,6 +162,7 @@ function average(values) {
 }
 
 function toTitleCase(str) {
+    // Convert the input string into title case.
     return str.replace(/\w\S*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
@@ -211,7 +226,8 @@ function updateRadius(radius) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    var $navbarBurgers = Array.prototype.slice.call(
+        document.querySelectorAll('.navbar-burger'), 0);
     var map = document.getElementById('map')
     if ($navbarBurgers.length > 0) {
         $navbarBurgers.forEach(function($el) {
@@ -250,12 +266,11 @@ document.addEventListener('DOMContentLoaded', function() {
         addressNav.classList.remove('is-active')
     });
     $('#checkAll').click(function(event) {
-        if(this.checked) {
+        if (this.checked) {
             $(':checkbox').each(function() {
                 if (!this.checked) this.click();
             });
-        }
-        else {
+        } else {
             $(':checkbox').each(function() {
                 if (this.checked) this.click();
             });
