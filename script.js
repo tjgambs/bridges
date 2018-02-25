@@ -21,12 +21,12 @@ function initAutocomplete() {
             map.panTo(place.geometry.location);
             map.setZoom(15);
             homeMarker = new google.maps.Marker({
-                            position: place.geometry.location,
-                            animation: google.maps.Animation.DROP,
-                            map: map,
-                            icon: 'assets/home_pin.png',
-                            address: place.formatted_address
-                        });
+                position: place.geometry.location,
+                animation: google.maps.Animation.DROP,
+                map: map,
+                icon: 'assets/home_pin.png',
+                address: place.formatted_address
+            });
             var infowindow = new google.maps.InfoWindow();
             var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
             google.maps.event.addListener(homeMarker, 'click', (function(marker) {
@@ -82,7 +82,7 @@ function initMarkers() {
     var groupByPositionGroupByAddress = {};
     for (var key in groupByAddress) {
         var positions = {}
-        for (i = 0; i < groupByAddress[key].length; i++) {   
+        for (i = 0; i < groupByAddress[key].length; i++) {
             var position = groupByAddress[key][i][2];
             var pay = groupByAddress[key][i][3];
             if (positions[position.toLowerCase()] == undefined) {
