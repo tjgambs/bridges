@@ -15,6 +15,7 @@ function initAutocomplete() {
         var industryNav = document.getElementById('industry');
         distanceNav.style.visibility = 'visible';
         industryNav.style.visibility = 'visible';
+        toggleDone();
         var place = autocomplete.getPlace();
         if (place.geometry) {
             //Remove old home
@@ -29,8 +30,8 @@ function initAutocomplete() {
                 address: place.formatted_address
             });
             var infowindow = new google.maps.InfoWindow();
-            var contentString = '<div><div>Home</div><div>' + 
-                place.formatted_address + '</div></div>';
+            var contentString = '<div><div><b>Home</b></div><div>' + 
+                place.formatted_address.replace(', USA', '') + '</div></div>';
             google.maps.event.addListener(homeMarker, 'click', (function(marker) {
                 return function() {
                     infowindow.setContent(contentString);
@@ -245,45 +246,75 @@ function updateRadius(radius) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var $navbarBurgers = Array.prototype.slice.call(
-        document.querySelectorAll('.navbar-burger'), 0);
+function toggleDone() {
+    var doneButton = document.getElementById('doneButton');
+    doneButton.style.visibility = doneButton.style.visibility == "hidden" ? "visible" : "hidden";
+}
+
+function burgerClicked($el) {
     var map = document.getElementById('map')
-    if ($navbarBurgers.length > 0) {
-        $navbarBurgers.forEach(function($el) {
-            $el.addEventListener('click', function() {
-                var target = $el.dataset.target;
-                var $target = document.getElementById(target);
-                $el.classList.toggle('is-active');
-                $target.classList.toggle('is-active');
-                map.classList.toggle('map');
-                map.classList.toggle('nomap');
-                var navLinks = document.querySelectorAll('.navbar-link')
-                navLinks.forEach(function($ele) {
-                    $ele.classList.toggle('link-color');
-                    $ele.classList.toggle('mobile-link-color');
-                });
-            });
+    var distanceNav = document.getElementById('distance')
+    $el.addEventListener('click', function() {
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+        map.classList.toggle('map');
+        map.classList.toggle('nomap');
+        var navLinks = document.querySelectorAll('.navbar-link')
+        navLinks.forEach(function($ele) {
+            $ele.classList.toggle('link-color');
+            $ele.classList.toggle('mobile-link-color');
         });
-    }
+        if (distanceNav.style.visibility == 'visible')
+            toggleDone();
+    });
+}
+
+function doneAction($el) {
+    var map = document.getElementById('map');
+    var distanceNav = document.getElementById('distance');
+    var target = $el.dataset.target;
+    var $target = document.getElementById(target);
+    $el.classList.toggle('is-active');
+    $target.classList.toggle('is-active');
+    map.classList.toggle('map');
+    map.classList.toggle('nomap');
+    var navLinks = document.querySelectorAll('.navbar-link')
+    navLinks.forEach(function($ele) {
+        $ele.classList.toggle('link-color');
+        $ele.classList.toggle('mobile-link-color');
+    });
+    if (distanceNav.style.visibility == 'visible')
+        toggleDone();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var doneButton = document.getElementById('doneButton');
+    var $navbarBurger = document.querySelector('.navbar-burger');
+    var map = document.getElementById('map');
     var addressNav = document.getElementById('address');
     var distanceNav = document.getElementById('distance');
     var industryNav = document.getElementById('industry');
     var logoNav = document.getElementById('logo');
+    $navbarBurger.addEventListener('click', burgerClicked($navbarBurger));
     addressNav.addEventListener('mouseenter', function() {
-        addressNav.classList.add('is-active')
+        addressNav.classList.add('is-active');
     });
     map.addEventListener('mouseenter', function() {
-        addressNav.classList.remove('is-active')
+        addressNav.classList.remove('is-active');
     });
     distanceNav.addEventListener('mouseenter', function() {
-        addressNav.classList.remove('is-active')
+        addressNav.classList.remove('is-active');
     });
     industryNav.addEventListener('mouseenter', function() {
-        addressNav.classList.remove('is-active')
+        addressNav.classList.remove('is-active');
     });
     logoNav.addEventListener('mouseenter', function() {
-        addressNav.classList.remove('is-active')
+        addressNav.classList.remove('is-active');
+    });
+    doneButton.addEventListener('click', function() {
+        doneAction($navbarBurger);
     });
     $('#checkAll').click(function(event) {
         if (this.checked) {
