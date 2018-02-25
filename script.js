@@ -26,7 +26,8 @@ function initAutocomplete() {
                             position: place.geometry.location,
                             animation: google.maps.Animation.DROP,
                             map: map,
-                            icon: 'assets/home_pin.png'
+                            icon: 'assets/home_pin.png',
+                            address: place.formatted_address
                         });
             var infowindow = new google.maps.InfoWindow();
             var contentString = '<div><div>Home</div><div>' + place.formatted_address + '</div></div>';
@@ -107,6 +108,7 @@ function initMarkers() {
         for (var position in groupByPositionGroupByAddress[address]) {
             contentString += '<div>' + toTitleCase(position) + ': $' + parseFloat(groupByPositionGroupByAddress[address][position]).toFixed(2) + '</div>';
         }
+        contentString += '<a href="#" onclick=\'getDirections(\"'+groupByAddress[address][0][4]+'\");\'>Get Directions</a>';
         contentString += '</div>';
 
         // Create the marker that will be shown on the map.
@@ -124,9 +126,6 @@ function initMarkers() {
             return function() {
                 infowindow.setContent(marker.contentString);
                 infowindow.open(map, marker);
-
-                console.log('Go get directions!');
-
             }
         })(marker));
         // Create a look up table for the markers based on industry.
@@ -138,6 +137,11 @@ function initMarkers() {
     }
 }
 
+function getDirections(destination_address) {
+    url = 'https://www.google.com/maps/dir/?api=1&origin='+ homeMarker.address + '&destination=' + destination_address;
+    window.open(url)
+}
+
 function average(values) {
     var total = 0;
     for (var i = 0; i < values.length; i++) {
@@ -146,8 +150,7 @@ function average(values) {
     return total / values.length;
 }
 
-function toTitleCase(str)
-{
+function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt) {
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
