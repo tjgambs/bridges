@@ -290,8 +290,6 @@ function doneAction($el) {
         $ele.classList.toggle('link-color');
         $ele.classList.toggle('mobile-link-color');
     });
-    if (distanceNav.style.visibility == 'visible')
-        toggleDone();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -320,6 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     doneButton.addEventListener('click', function() {
         doneAction($navbarBurger);
+        doneButton.style.visibility = 'hidden';
     });
     $('#checkAll').click(function(event) {
         if (this.checked) {
