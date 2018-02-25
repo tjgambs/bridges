@@ -153,8 +153,8 @@ function initMarkers() {
 
 function getDirections(destination_address) {
     // Generate a url that the user can use to get directions from google.
-    url = ('https://www.google.com/maps/dir/?api=1&origin=' + 
-            homeMarker.address + '&destination=' + destination_address);
+    url = ('https://www.google.com/maps/dir/?api=1&origin='
+            + homeMarker.address + '&destination=' + destination_address);
     window.open(url)
 }
 
@@ -186,8 +186,7 @@ function initMap() {
 }
 
 
-function filterMarkers(category) { // WORKS
-
+function filterMarkers(category) {
     if (category.name == undefined) {
         // Then just update 
         for (var i = 0; i < markers[category].length; i++) {
@@ -199,32 +198,31 @@ function filterMarkers(category) { // WORKS
                 markers[category][i].setVisible(true);
             }
         }
-        return;
-    }
-
-    // Check to see if this industry is already selected.
-    var indexOfCategory = selectedIndustries.indexOf(category.name);
-    if (indexOfCategory > -1) {
-        // If this industry is currently selected, then this function
-        // call is meant to remove all markers in this industry.
-        selectedIndustries.splice(indexOfCategory, 1)
-        for (var i = 0; i < markers[category.name].length; i++) {
-            markers[category.name][i].setVisible(false);
-        }
     } else {
-        // If this industry is not currently selected, then this function
-        // call is meant to add all markers in this indistry, within the 
-        // radius.
-        for (var i = 0; i < markers[category.name].length; i++) {
-            if (markers[category.name][i].distance > currentRadius) {
-                // If this location is greater than the selected radius
+        // Check to see if this industry is already selected.
+        var indexOfCategory = selectedIndustries.indexOf(category.name);
+        if (indexOfCategory > -1) {
+            // If this industry is currently selected, then this function
+            // call is meant to remove all markers in this industry.
+            selectedIndustries.splice(indexOfCategory, 1)
+            for (var i = 0; i < markers[category.name].length; i++) {
                 markers[category.name][i].setVisible(false);
-            } else {
-                // If this location is within the radius.
-                markers[category.name][i].setVisible(true);
             }
+        } else {
+            // If this industry is not currently selected, then this function
+            // call is meant to add all markers in this indistry, within the 
+            // radius.
+            for (var i = 0; i < markers[category.name].length; i++) {
+                if (markers[category.name][i].distance > currentRadius) {
+                    // If this location is greater than the selected radius
+                    markers[category.name][i].setVisible(false);
+                } else {
+                    // If this location is within the radius.
+                    markers[category.name][i].setVisible(true);
+                }
+            }
+            selectedIndustries.push(category.name);
         }
-        selectedIndustries.push(category.name);
     }
 }
 
@@ -234,9 +232,11 @@ function updateRadius(radius) {
     currentRadius = parseInt(x);
     // Iterate through all of the selected categories and adjust according 
     // to the new radius.
-
-    for (var i = 0; i < selectedIndustries.length; i++) {
-        for (var j = 0; j < markers[selectedIndustries[i]].length; j++) {
+    var i, j;
+    for (i = 0; i < selectedIndustries.length; i++) {
+        for (j = 0; j < markers[selectedIndustries[i]].length; j++) {
+            // If the the distance from this marker to home is larger than the
+            // allowed radius, then set its visiblity to false, otherwise true.
             if (markers[selectedIndustries[i]][j].distance > currentRadius) {
                 markers[selectedIndustries[i]][j].setVisible(false);
             } else {
