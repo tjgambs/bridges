@@ -49,7 +49,7 @@ function initAutocomplete() {
                 }
             }
             if (selectedIndustries.length > 0) {
-                for(var i = 0; i < selectedIndustries.length; i++) {
+                for (var i = 0; i < selectedIndustries.length; i++) {
                     filterMarkers(selectedIndustries[i]);
                 }
             }
@@ -105,7 +105,7 @@ function initMarkers() {
         for (var pos in positions) {
             positions[pos] = average(positions[pos]);
         }
-        groupByPositionGroupByAddress[key] = positions
+        groupByPositionGroupByAddress[key] = positions;
     }
 
     for (var address in groupByPositionGroupByAddress) {
@@ -156,7 +156,7 @@ function getDirections(destination_address) {
     // Generate a url that the user can use to get directions from google.
     url = ('https://www.google.com/maps/dir/?api=1&origin='
             + homeMarker.address + '&destination=' + destination_address);
-    window.open(url)
+    window.open(url);
 }
 
 function average(values) {
@@ -205,7 +205,7 @@ function filterMarkers(category) {
         if (indexOfCategory > -1) {
             // If this industry is currently selected, then this function
             // call is meant to remove all markers in this industry.
-            selectedIndustries.splice(indexOfCategory, 1)
+            selectedIndustries.splice(indexOfCategory, 1);
             for (var i = 0; i < markers[category.name].length; i++) {
                 markers[category.name][i].setVisible(false);
             }
@@ -255,8 +255,8 @@ function toggleDone() {
 }
 
 function burgerClicked($el) {
-    var map = document.getElementById('map')
-    var distanceNav = document.getElementById('distance')
+    var map = document.getElementById('map');
+    var distanceNav = document.getElementById('distance');
     $el.addEventListener('click', function() {
         burgerOpen = burgerOpen == true ? false : true;
         var target = $el.dataset.target;
@@ -265,7 +265,7 @@ function burgerClicked($el) {
         $target.classList.toggle('is-active');
         map.classList.toggle('map');
         map.classList.toggle('nomap');
-        var navLinks = document.querySelectorAll('.navbar-link')
+        var navLinks = document.querySelectorAll('.navbar-link');
         navLinks.forEach(function($ele) {
             $ele.classList.toggle('link-color');
             $ele.classList.toggle('mobile-link-color');
